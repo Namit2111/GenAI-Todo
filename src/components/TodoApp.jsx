@@ -6,8 +6,8 @@ const TodoApp = () => {
   const [notes, setNotes] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [selectedNote, setSelectedNote] = useState(null);
-  const [noteAdded, setNoteAdded] = useState(false); // State to track new note addition
-  const [isAddingNote, setIsAddingNote] = useState(false); // State to track if note is being added
+  const [noteAdded, setNoteAdded] = useState(false);
+  const [isAddingNote, setIsAddingNote] = useState(false);
   const username = localStorage.getItem('username');
   const history = useNavigate();
 
@@ -24,7 +24,7 @@ const TodoApp = () => {
     };
 
     fetchNotes();
-  }, [noteAdded]); // Refetch notes when noteAdded changes
+  }, [noteAdded]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -32,7 +32,7 @@ const TodoApp = () => {
 
   const handleAddNote = async () => {
     if (inputValue.trim() !== '') {
-      setIsAddingNote(true); // Set state to indicate note is being added
+      setIsAddingNote(true);
       const token = localStorage.getItem('token');
       const response = await fetch('https://genai-todob.onrender.com/api/notes', {
         method: 'POST',
@@ -45,12 +45,11 @@ const TodoApp = () => {
 
       const newNote = await response.json();
 
-      // Check the new note structure
       console.log('Response from backend:', newNote);
 
-      setNoteAdded(!noteAdded); // Toggle the state to trigger useEffect
+      setNoteAdded(!noteAdded);
       setInputValue('');
-      setIsAddingNote(false); // Reset state after note is added
+      setIsAddingNote(false);
     }
   };
 
@@ -84,6 +83,8 @@ const TodoApp = () => {
     history('/login');
   };
 
+  const sortedNotes = notes.sort((a, b) => (a.priority === 'High' ? -1 : 1));
+
   return (
     <div className="main-container">
       <h1 className="heading">Todo App</h1>
@@ -106,7 +107,7 @@ const TodoApp = () => {
             </button>
           </div>
           <div className="grid-container">
-            {notes.map((note, index) => (
+            {sortedNotes.map((note, index) => (
               <div key={index} className="card">
                 <div className="card-content" onClick={() => handleNoteClick(index)}>
                   <p className="ellipses">{note.content}</p>
