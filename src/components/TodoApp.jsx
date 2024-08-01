@@ -14,7 +14,7 @@ const TodoApp = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://genai-todob.onrender.com/api/notes', {
+      const response = await fetch('http://localhost:5000/api/notes', {
         headers: {
           'x-auth-token': token,
         },
@@ -34,7 +34,7 @@ const TodoApp = () => {
     if (inputValue.trim() !== '') {
       setIsAddingNote(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://genai-todob.onrender.com/api/notes', {
+      const response = await fetch('http://localhost:5000/api/notes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const TodoApp = () => {
   const handleDeleteNote = async (index) => {
     const noteToDelete = notes[index];
     const token = localStorage.getItem('token');
-    await fetch(`https://genai-todob.onrender.com/api/notes/${noteToDelete._id}`, {
+    await fetch(`http://localhost:5000/api/notes/${noteToDelete._id}`, {
       method: 'DELETE',
       headers: {
         'x-auth-token': token,

@@ -10,7 +10,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://genai-todob.onrender.com/api/users/login', {
+      const response = await fetch('http://localhost:5000/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,6 +37,11 @@ const Login = () => {
     <div className="login-bg">
       <form className="login-box" onSubmit={handleSubmit}>
         <h2 className="title">Login</h2>
+        <div className="notice">
+          <p>For testing purposes, use:</p>
+          <p>Username: <strong>user</strong></p>
+          <p>Password: <strong>user@123</strong></p>
+        </div>
         <div className="input-wrapper">
           <label className="label-text" htmlFor="username">Username</label>
           <input
@@ -60,6 +65,7 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="button-submit">Login</button>
+        <p>Login might be a little slow due to free server.</p>
       </form>
     </div>
   );
